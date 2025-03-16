@@ -25,3 +25,10 @@ interface PaperTextInputProps {
   disable?: boolean;
   multiline?: boolean;
 }
+
+interface OnboardData {
+  text: string;
+  title: string;
+  id: number;
+  image: ImageSourcePropType;
+}

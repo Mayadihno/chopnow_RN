@@ -1,21 +1,53 @@
 import { fontSizes } from "@/utils/constants/app.constants";
-import { Text, View } from "react-native";
-
+import { onBorad } from "@/utils/data/data";
+import { styles } from "@/utils/styles/styles";
+import color from "@/utils/themes/app.colors";
+import {
+  Text,
+  View,
+  Image,
+  ImageBackground,
+  TouchableOpacity,
+} from "react-native";
+import Swiper from "react-native-swiper";
 export default function Index() {
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text
-        className="font-bold text-red-500"
-        style={{ fontSize: fontSizes.FONT20 }}
+    <View style={{ flex: 1, backgroundColor: "#F6F9F9" }}>
+      <Swiper
+        activeDotStyle={styles.activeStyle}
+        removeClippedSubviews={true}
+        paginationStyle={styles.paginationStyle}
       >
-        Edit to edit this screen 1.
-      </Text>
+        {onBorad.map((silde: OnboardData, index: number) => (
+          <View style={[styles.slideContainer]} key={index}>
+            <Image style={styles.imageBackground} source={silde.image} />
+            <View style={[styles.imageBgView]}>
+              <ImageBackground
+                resizeMode="stretch"
+                style={styles.img}
+                source={require("../assets/onboard/bgOnboarding.png")}
+              >
+                <Text style={styles.title}>{silde.title}</Text>
+                <Text style={styles.description}>{silde.text}</Text>
+              </ImageBackground>
+            </View>
+          </View>
+        ))}
+      </Swiper>
+
+      <View className="w-[90%] mx-auto">
+        <TouchableOpacity style={styles.button}>
+          <Text
+            style={{
+              fontSize: fontSizes.FONT20,
+              fontWeight: "600",
+              color: color.whiteColor,
+            }}
+          >
+            Get Started
+          </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }

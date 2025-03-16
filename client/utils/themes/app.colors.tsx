@@ -32,6 +32,7 @@ export type Color = {
   thirdColor: string;
   black: string;
   white: string;
+  primary: string;
 };
 
 const color: Color = {
@@ -68,6 +69,7 @@ const color: Color = {
   primaryColor: "#f3921d",
   secondaryColor: "#744414",
   thirdColor: "#3c220d",
+  primary: "#00B0B9",
 };
 
 export default color;
