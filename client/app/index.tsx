@@ -2,6 +2,7 @@ import { fontSizes } from "@/utils/constants/app.constants";
 import { onBorad } from "@/utils/data/data";
 import { styles } from "@/utils/styles/styles";
 import color from "@/utils/themes/app.colors";
+import { router } from "expo-router";
 import {
   Text,
   View,
@@ -36,7 +37,10 @@ export default function Index() {
       </Swiper>
 
       <View className="w-[90%] mx-auto">
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity
+          onPress={() => router.replace("/(routes)/intro")}
+          style={styles.button}
+        >
           <Text
             style={{
               fontSize: fontSizes.FONT20,

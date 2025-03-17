@@ -2,7 +2,7 @@ import { windowHeight } from "@/utils/constants/app.constants";
 import { commonStyles } from "@/utils/styles/commom.style";
 import { external } from "@/utils/styles/external.style";
 import color from "@/utils/themes/app.colors";
-import { Pressable, StyleSheet, Text } from "react-native";
+import { TouchableOpacity, StyleSheet, Text } from "react-native";
 
 const Button: React.FC<ButtonProps> = ({
   title,
@@ -11,14 +11,16 @@ const Button: React.FC<ButtonProps> = ({
   backgroundColor,
   textColor,
   disabled,
+  height,
 }) => {
   const widthNumber = width || "100%";
   return (
-    <Pressable
+    <TouchableOpacity
       style={[
         styles.container,
         {
           width: widthNumber,
+          height: height,
           backgroundColor: backgroundColor || color.buttonBg,
         },
       ]}
@@ -33,14 +35,13 @@ const Button: React.FC<ButtonProps> = ({
       >
         {title}
       </Text>
-    </Pressable>
+    </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: color.buttonBg,
-    height: windowHeight(40),
     borderRadius: 6,
     ...external.ai_center,
     ...external.js_center,

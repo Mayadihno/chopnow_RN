@@ -5,6 +5,7 @@ type ButtonProps = {
   backgroundColor?: string;
   textColor?: string;
   disabled?: boolean;
+  height?: DimensionValue;
 };
 
 interface PaperTextInputProps {
