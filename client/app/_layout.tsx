@@ -8,8 +8,20 @@ import {
 import { ToastProvider } from "react-native-toast-notifications";
 import { StatusBar } from "react-native";
 import color from "@/utils/themes/app.colors";
+import { useFonts } from "expo-font";
+import { Poppins_400Regular } from "@expo-google-fonts/poppins";
+import { Inter_400Regular } from "@expo-google-fonts/inter";
+import { Lobster_400Regular } from "@expo-google-fonts/lobster";
 
 export default function RootLayout() {
+  const [fontsLoaded] = useFonts({
+    PoppinsRegular: Poppins_400Regular,
+    InterRegular: Inter_400Regular,
+    LobsterRegular: Lobster_400Regular,
+  });
+  if (!fontsLoaded) {
+    return null;
+  }
   const theme = {
     ...DefaultThemes,
     colors: {
