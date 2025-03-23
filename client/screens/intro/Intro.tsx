@@ -13,6 +13,7 @@ import {
 } from "@/utils/constants/app.constants";
 import color from "@/utils/themes/app.colors";
 import Button from "@/components/common/button";
+import { router } from "expo-router";
 
 export default function Intro() {
   return (
@@ -46,11 +47,13 @@ export default function Intro() {
             title="Login as User"
             width={windowWidth(200)}
             height={windowHeight(35)}
+            onPress={() => router.replace("/user/login")}
           />
           <Button
             title="Login as Vendor"
             width={windowWidth(200)}
             height={windowHeight(35)}
+            onPress={() => router.replace("/")}
           />
         </View>
       </View>
