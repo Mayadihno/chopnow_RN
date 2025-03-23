@@ -55,5 +55,14 @@ const commonStyles = StyleSheet.create({
     shadowRadius: 1.0,
     elevation: 1,
   },
+  flexAll: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  flexHalf: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
 });
 export { commonStyles };

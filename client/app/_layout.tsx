@@ -9,15 +9,46 @@ import { ToastProvider } from "react-native-toast-notifications";
 import { StatusBar } from "react-native";
 import color from "@/utils/themes/app.colors";
 import { useFonts } from "expo-font";
-import { Poppins_400Regular } from "@expo-google-fonts/poppins";
-import { Inter_400Regular } from "@expo-google-fonts/inter";
+
+import {
+  Poppins_300Light,
+  Poppins_400Regular,
+  Poppins_500Medium,
+  Poppins_600SemiBold,
+  Poppins_700Bold,
+  Poppins_800ExtraBold,
+} from "@expo-google-fonts/poppins";
+
 import { Lobster_400Regular } from "@expo-google-fonts/lobster";
+
+import {
+  Inter_300Light,
+  Inter_400Regular,
+  Inter_500Medium,
+  Inter_600SemiBold,
+  Inter_700Bold,
+  Inter_900Black,
+} from "@expo-google-fonts/inter";
 
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
-    PoppinsRegular: Poppins_400Regular,
-    InterRegular: Inter_400Regular,
-    LobsterRegular: Lobster_400Regular,
+    Poppins_300Light,
+    Poppins_400Regular,
+    Poppins_500Medium,
+    Poppins_600SemiBold,
+    Poppins_700Bold,
+    Poppins_800ExtraBold,
+
+    // Lobster
+    Lobster_400Regular,
+
+    // Inter
+    Inter_300Light,
+    Inter_400Regular,
+    Inter_500Medium,
+    Inter_600SemiBold,
+    Inter_700Bold,
+    Inter_900Black,
   });
   if (!fontsLoaded) {
     return null;

@@ -1,7 +1,9 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
 import { TextInput } from "react-native-paper";
-import { fontSizes } from "@/utils/constants/app.constants";
+import { fontSizes, windowHeight } from "@/utils/constants/app.constants";
+import color from "@/utils/themes/app.colors";
+import fonts from "@/utils/themes/app.fonts";
 
 const CustomTextInput: React.FC<PaperTextInputProps> = ({
   label,
@@ -25,9 +27,20 @@ const CustomTextInput: React.FC<PaperTextInputProps> = ({
   const [isSecure, setIsSecure] = useState(secureTextEntry);
 
   return (
-    <View style={[styles.container, style]}>
+    <View style={[style]}>
+      {label && (
+        <Text
+          style={{
+            fontSize: fontSizes.FONT18,
+            marginVertical: windowHeight(2),
+            color: hasError ? color.alertRed : color.darkBorder,
+            fontFamily: fonts.poppins.medium,
+          }}
+        >
+          {label}
+        </Text>
+      )}
       <TextInput
-        label={label}
         value={value}
         onChangeText={onChangeText}
         placeholder={placeholder}
@@ -60,17 +73,16 @@ const CustomTextInput: React.FC<PaperTextInputProps> = ({
 };
 
 const styles = StyleSheet.create({
-  container: {
-    marginBottom: 16,
-  },
   input: {
     backgroundColor: "white",
+    fontFamily: fonts.poppins.medium,
   },
 
   error: {
     marginTop: 4,
     color: "red",
     fontSize: fontSizes.FONT14,
+    fontFamily: fonts.poppins.regular,
   },
 });
 

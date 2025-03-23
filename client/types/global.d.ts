@@ -33,3 +33,8 @@ interface OnboardData {
   id: number;
   image: ImageSourcePropType;
 }
+
+interface LoginValues {
+  email: string;
+  password: string;
+}
