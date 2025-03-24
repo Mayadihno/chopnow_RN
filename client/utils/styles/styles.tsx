@@ -3,6 +3,7 @@ import color from "../themes/app.colors";
 import { commonStyles } from "./commom.style";
 import { fontSizes, windowHeight } from "../constants/app.constants";
 import { external } from "./external.style";
+import fonts from "../themes/app.fonts";
 
 export const styles = StyleSheet.create({
   activeStyle: {
@@ -36,6 +37,7 @@ export const styles = StyleSheet.create({
     fontSize: fontSizes.FONT28,
     fontWeight: "bold",
     textTransform: "capitalize",
+    fontFamily: fonts.poppins.semiBold,
   },
   description: {
     ...commonStyles.regularText,
@@ -45,6 +47,7 @@ export const styles = StyleSheet.create({
     fontSize: fontSizes.FONT19,
     lineHeight: windowHeight(17),
     ...external.ti_center,
+    fontFamily: fonts.inter.medium,
   },
   button: {
     width: "100%",

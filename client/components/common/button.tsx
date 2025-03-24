@@ -2,6 +2,7 @@ import { windowHeight } from "@/utils/constants/app.constants";
 import { commonStyles } from "@/utils/styles/commom.style";
 import { external } from "@/utils/styles/external.style";
 import color from "@/utils/themes/app.colors";
+import fonts from "@/utils/themes/app.fonts";
 import { TouchableOpacity, StyleSheet, Text } from "react-native";
 
 const Button: React.FC<ButtonProps> = ({
@@ -30,7 +31,10 @@ const Button: React.FC<ButtonProps> = ({
       <Text
         style={[
           commonStyles.extraBold,
-          { color: textColor || color.whiteColor },
+          {
+            color: textColor || color.whiteColor,
+            fontFamily: fonts.poppins.semiBold,
+          },
         ]}
       >
         {title}

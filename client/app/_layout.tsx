@@ -57,8 +57,6 @@ export default function RootLayout() {
     ...DefaultThemes,
     colors: {
       ...DefaultThemes.colors,
-      primary: "#FF8C00",
-      secondary: "yellow",
     },
   };
   return (

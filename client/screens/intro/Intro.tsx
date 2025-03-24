@@ -14,6 +14,7 @@ import {
 import color from "@/utils/themes/app.colors";
 import Button from "@/components/common/button";
 import { router } from "expo-router";
+import fonts from "@/utils/themes/app.fonts";
 
 export default function Intro() {
   return (
@@ -66,6 +67,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginVertical: windowHeight(30),
     fontSize: fontSizes.FONT25,
+    fontFamily: fonts.poppins.semiBold,
   },
   container: {
     flex: 1,

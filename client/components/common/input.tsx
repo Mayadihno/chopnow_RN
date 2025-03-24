@@ -51,6 +51,8 @@ const CustomTextInput: React.FC<PaperTextInputProps> = ({
         theme={{
           colors: {
             error: "#FF0000",
+            primary: color.primary,
+            secondary: color.primaryColor,
           },
         }}
         multiline={multiline}

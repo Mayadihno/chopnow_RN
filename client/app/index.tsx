@@ -2,6 +2,7 @@ import { fontSizes } from "@/utils/constants/app.constants";
 import { onBorad } from "@/utils/data/data";
 import { styles } from "@/utils/styles/styles";
 import color from "@/utils/themes/app.colors";
+import fonts from "@/utils/themes/app.fonts";
 import { router } from "expo-router";
 import {
   Text,
@@ -46,6 +47,7 @@ export default function Index() {
               fontSize: fontSizes.FONT20,
               fontWeight: "600",
               color: color.whiteColor,
+              fontFamily: fonts.poppins.semiBold,
             }}
           >
             Get Started
