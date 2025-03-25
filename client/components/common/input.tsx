@@ -1,7 +1,11 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
 import { TextInput } from "react-native-paper";
-import { fontSizes, windowHeight } from "@/utils/constants/app.constants";
+import {
+  fontSizes,
+  windowHeight,
+  windowWidth,
+} from "@/utils/constants/app.constants";
 import color from "@/utils/themes/app.colors";
 import fonts from "@/utils/themes/app.fonts";
 
@@ -22,6 +26,7 @@ const CustomTextInput: React.FC<PaperTextInputProps> = ({
   disable = false,
   multiline = false,
   iconName,
+  width,
   ...props
 }) => {
   const [isSecure, setIsSecure] = useState(secureTextEntry);
@@ -56,7 +61,12 @@ const CustomTextInput: React.FC<PaperTextInputProps> = ({
           },
         }}
         multiline={multiline}
-        style={[styles.input]}
+        style={[
+          styles.input,
+          {
+            width: width || "100%",
+          },
+        ]}
         error={!!error}
         right={
           showToggleIcon ? (

@@ -25,6 +25,7 @@ import { StyleSheet } from "react-native";
 import { ImageBackground } from "react-native";
 import { StatusBar } from "react-native";
 import Button from "@/components/common/button";
+import { router } from "expo-router";
 
 export default function Login() {
   const [checked, setChecked] = useState(false);
@@ -180,7 +181,12 @@ export default function Login() {
           <View style={style.dontHaveAccount}>
             <Text style={style.signUp}>
               Don't have an account?{" "}
-              <Text style={style.signUpDont}>Sign up</Text>
+              <Text
+                onPress={() => router.push("/user/register")}
+                style={style.signUpDont}
+              >
+                Sign up
+              </Text>
             </Text>
           </View>
         </ScrollView>

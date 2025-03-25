@@ -25,6 +25,7 @@ interface PaperTextInputProps {
   iconName?: string;
   disable?: boolean;
   multiline?: boolean;
+  width?: DimensionValue;
 }
 
 interface OnboardData {
@@ -37,4 +38,13 @@ interface OnboardData {
 interface LoginValues {
   email: string;
   password: string;
+}
+
+interface RegisterValues {
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
 }
