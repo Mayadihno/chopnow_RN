@@ -46,6 +46,7 @@ export default function Register() {
   });
   const handleRegister = (data: RegisterValues) => {
     console.log(data);
+    router.push("/user/verify");
   };
   return (
     <>
