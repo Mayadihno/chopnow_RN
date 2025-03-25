@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   fontSizes,
@@ -26,8 +26,12 @@ import { Controller, useForm } from "react-hook-form";
 import CustomTextInput from "@/components/common/input";
 import Button from "@/components/common/button";
 import { commonStyles } from "@/utils/styles/commom.style";
+import { userApi } from "@/services/user";
+import { showToast } from "@/components/common/Toaster";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Register() {
+  const [loading, setLoading] = useState(false);
   const {
     control,
     handleSubmit,
@@ -44,9 +48,32 @@ export default function Register() {
       phoneNumber: "",
     },
   });
-  const handleRegister = (data: RegisterValues) => {
-    console.log(data);
-    router.push("/user/verify");
+  const handleRegister = async (data: RegisterValues) => {
+    setLoading(true);
+    const { confirmPassword, ...userData } = data;
+    const res = await userApi.sendOTP({
+      email: userData.email,
+      phoneNumber: userData.phoneNumber,
+      firstName: userData.firstName,
+    });
+    if (res.status === 200) {
+      setLoading(false);
+      showToast({
+        message: res.message,
+        type: "success",
+      });
+      await AsyncStorage.setItem("userEmail", JSON.stringify(data.email));
+      await AsyncStorage.setItem("sellerData", JSON.stringify(userData));
+      router.push("/user/verify");
+    }
+    try {
+    } catch (error: any) {
+      setLoading(false);
+      showToast({
+        message: error.message,
+        type: "danger",
+      });
+    }
   };
   return (
     <>

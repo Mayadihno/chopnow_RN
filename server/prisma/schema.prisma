@@ -6,3 +6,52 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum Role {
+  USER
+  SELLER
+  ADMIN
+}
+
+model Address {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  street String
+  city   String
+  state  String
+  zip    String
+  userId String @db.ObjectId
+  user   User   @relation(fields: [userId], references: [id])
+}
+
+model User {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  email       String    @unique
+  password    String
+  firstName   String
+  lastName    String
+  phoneNumber String    @unique
+  role        Role      @default(USER)
+  balance     Float     @default(0)
+  gender      Gender?
+  dob         DateTime?
+  username    String?
+
+  addresses Address[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model token {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  email     String
+  token     Float
+  createdAt DateTime @default(now()) @map("createdAt")
+
+  @@index([createdAt], map: "createdAt_idx")
+}
