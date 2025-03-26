@@ -23,4 +23,15 @@ export const userApi = {
       throw new Error(errorMessage);
     }
   },
+
+  verifyOtp: async ({ email, otp }: { email: string; otp: string }) => {
+    try {
+      const response = await instance.post("/verify-otp", { email, otp });
+      return response.data;
+    } catch (error: any) {
+      const errorMessage =
+        error.response?.data?.error || "An error occurred during verification.";
+      throw new Error(errorMessage);
+    }
+  },
 };

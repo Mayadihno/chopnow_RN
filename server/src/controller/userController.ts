@@ -91,3 +91,49 @@ export const sendOtp = async (req: Request, res: Response) => {
     return;
   }
 };
+
+export const verifyToken = async (req: Request, res: Response) => {
+  const { email, otp } = req.body;
+  try {
+    const validToken = await db.token.findFirst({
+      where: {
+        email: email,
+        token: parseFloat(otp),
+      },
+    });
+    if (!validToken) {
+      res.status(400).json({
+        success: false,
+        error: "Invalid or expired token",
+      });
+      return;
+    }
+
+    const tokenExpiryTime = 10 * 60 * 1000; // 10 minutes
+    if (
+      Date.now() - new Date(validToken.createdAt).getTime() >
+      tokenExpiryTime
+    ) {
+      await db.token.delete({ where: { id: validToken.id } });
+      res.status(400).json({
+        success: false,
+        error: "Token has expired",
+      });
+      return;
+    }
+    await db.token.delete({
+      where: {
+        id: validToken.id,
+      },
+    });
+    res.status(200).json({
+      success: true,
+      status: 200,
+      message: "OTP verified successfully!",
+    });
+  } catch (error) {
+    console.log(error);
+    ErrorMessage(res, 500, "Internal Server Error");
+    return;
+  }
+};

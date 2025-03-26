@@ -1,5 +1,5 @@
 import { Image, StyleSheet, Text, View } from "react-native";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   fontSizes,
@@ -9,13 +9,57 @@ import {
 import fonts from "@/utils/themes/app.fonts";
 import OTPTextInput from "react-native-otp-textinput";
 import Button from "@/components/common/button";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { showToast } from "@/components/common/Toaster";
+import { router } from "expo-router";
+import { userApi } from "@/services/user";
 
 export default function VerifyToken() {
   const [otp, setOtp] = useState("");
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
   const otpInput = useRef(null);
 
-  const hangleVerifyOTP = () => {
-    console.log(otp);
+  const loadEmail = async () => {
+    const email = await AsyncStorage.getItem("userEmail");
+    if (email) {
+      const userEmail = JSON.parse(email);
+      setEmail(userEmail);
+    }
+  };
+  useEffect(() => {
+    loadEmail();
+  }, []);
+
+  const hangleVerifyOTP = async () => {
+    if (otp.length !== 6) {
+      showToast({
+        type: "danger",
+        message: "Invalid OTP",
+      });
+      return;
+    }
+    setLoading(true);
+    try {
+      const response = await userApi.verifyOtp({
+        email,
+        otp,
+      });
+      if (response.status === 200) {
+        showToast({
+          type: "success",
+          message: response.message,
+        });
+        setLoading(false);
+        router.replace("/user/login");
+      }
+    } catch (error: any) {
+      setLoading(false);
+      showToast({
+        type: "danger",
+        message: error.message,
+      });
+    }
   };
   return (
     <SafeAreaView className="flex-1" style={{ backgroundColor: "#f4f4f4" }}>
@@ -62,7 +106,7 @@ export default function VerifyToken() {
             paddingTop: windowHeight(2),
           }}
         >
-          mayadihno@gmail.com
+          {email}
         </Text>
         <View style={styles.container}>
           <OTPTextInput
@@ -79,6 +123,9 @@ export default function VerifyToken() {
             title="Verify"
             height={windowHeight(35)}
             onPress={hangleVerifyOTP}
+            loading={loading}
+            disabled={loading}
+            loadingText="Verifying..."
           />
         </View>
       </View>
