@@ -49,6 +49,7 @@ export default function Register() {
     },
   });
   const handleRegister = async (data: RegisterValues) => {
+    console.log(data);
     setLoading(true);
     const { confirmPassword, ...userData } = data;
     const res = await userApi.sendOTP({
@@ -275,6 +276,9 @@ export default function Register() {
               title="Sign Up"
               height={windowHeight(35)}
               onPress={handleSubmit(handleRegister)}
+              disabled={loading}
+              loading={loading}
+              loadingText="Creating Account... Please wait"
             />
           </View>
           <View

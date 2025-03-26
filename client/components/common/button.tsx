@@ -1,9 +1,14 @@
+import {
+  ActivityIndicator,
+  TouchableOpacity,
+  StyleSheet,
+  Text,
+} from "react-native";
 import { windowHeight } from "@/utils/constants/app.constants";
 import { commonStyles } from "@/utils/styles/commom.style";
 import { external } from "@/utils/styles/external.style";
 import color from "@/utils/themes/app.colors";
 import fonts from "@/utils/themes/app.fonts";
-import { TouchableOpacity, StyleSheet, Text } from "react-native";
 
 const Button: React.FC<ButtonProps> = ({
   title,
@@ -13,21 +18,32 @@ const Button: React.FC<ButtonProps> = ({
   textColor,
   disabled,
   height,
+  loading,
+  loadingText,
 }) => {
   const widthNumber = width || "100%";
+
   return (
     <TouchableOpacity
       style={[
         styles.container,
         {
           width: widthNumber,
-          height: height,
+          height: height || windowHeight(50),
           backgroundColor: backgroundColor || color.buttonBg,
+          opacity: disabled || loading ? 0.7 : 1,
         },
       ]}
       onPress={onPress}
-      disabled={disabled}
+      disabled={disabled || loading}
     >
+      {loading && (
+        <ActivityIndicator
+          style={{ marginRight: 10 }}
+          size="large"
+          color={textColor || color.whiteColor}
+        />
+      )}
       <Text
         style={[
           commonStyles.extraBold,
@@ -37,7 +53,7 @@ const Button: React.FC<ButtonProps> = ({
           },
         ]}
       >
-        {title}
+        {loading ? loadingText : title}
       </Text>
     </TouchableOpacity>
   );
@@ -49,6 +65,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     ...external.ai_center,
     ...external.js_center,
+    flexDirection: "row",
   },
 });
 

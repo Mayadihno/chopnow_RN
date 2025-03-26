@@ -2,6 +2,7 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import bodyParser from "body-parser";
+import userRouter from "./routes/userRoute";
 
 require("dotenv").config();
 const app = express();
@@ -19,3 +20,5 @@ const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
   console.log(`Server is listening on localhost:${process.env.PORT}`);
 });
+
+app.use("/api/v1", userRouter);
