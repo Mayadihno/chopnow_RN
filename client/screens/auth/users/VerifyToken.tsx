@@ -18,6 +18,7 @@ export default function VerifyToken() {
   const [otp, setOtp] = useState("");
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
+  const [userData, setUserData] = useState<any>();
   const otpInput = useRef(null);
 
   const loadEmail = async () => {
@@ -27,8 +28,16 @@ export default function VerifyToken() {
       setEmail(userEmail);
     }
   };
+  const loadUserData = async () => {
+    const userData = await AsyncStorage.getItem("userData");
+    if (userData) {
+      const user = JSON.parse(userData);
+      setUserData(user);
+    }
+  };
   useEffect(() => {
     loadEmail();
+    loadUserData();
   }, []);
 
   const hangleVerifyOTP = async () => {
@@ -46,12 +55,17 @@ export default function VerifyToken() {
         otp,
       });
       if (response.status === 200) {
-        showToast({
-          type: "success",
-          message: response.message,
-        });
-        setLoading(false);
-        router.replace("/user/login");
+        const res = await userApi.createUser(userData);
+        if (res.staus === 201) {
+          showToast({
+            type: "success",
+            message: response.message,
+          });
+          setLoading(false);
+          await AsyncStorage.removeItem("userEmail");
+          await AsyncStorage.removeItem("userData");
+          router.replace("/user/login");
+        }
       }
     } catch (error: any) {
       setLoading(false);

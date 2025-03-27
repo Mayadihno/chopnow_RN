@@ -34,4 +34,16 @@ export const userApi = {
       throw new Error(errorMessage);
     }
   },
+
+  createUser: async (userData: RegisterValues) => {
+    try {
+      const response = await instance.post("/create-user", userData);
+      return response.data;
+    } catch (error: any) {
+      const errorMessage =
+        error.response?.data?.error ||
+        "An error occurred during seller creation.";
+      throw new Error(errorMessage);
+    }
+  },
 };

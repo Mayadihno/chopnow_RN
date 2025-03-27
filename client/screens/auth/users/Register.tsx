@@ -64,7 +64,7 @@ export default function Register() {
         type: "success",
       });
       await AsyncStorage.setItem("userEmail", JSON.stringify(data.email));
-      await AsyncStorage.setItem("sellerData", JSON.stringify(userData));
+      await AsyncStorage.setItem("userData", JSON.stringify(userData));
       router.push("/user/verify");
     }
     try {

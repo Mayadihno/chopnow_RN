@@ -2,6 +2,7 @@ import { db } from "@/db/db";
 import { ErrorMessage } from "@/utils/ErrorMessage";
 import { Request, Response } from "express";
 import nodemailer from "nodemailer";
+import bcrypt from "bcryptjs";
 
 // Create a nodemailer transporter
 const transporter = nodemailer.createTransport({
@@ -133,6 +134,73 @@ export const verifyToken = async (req: Request, res: Response) => {
     });
   } catch (error) {
     console.log(error);
+    ErrorMessage(res, 500, "Internal Server Error");
+    return;
+  }
+};
+
+export const createUser = async (req: Request, res: Response) => {
+  try {
+    const { firstName, lastName, email, password, phoneNumber } = req.body;
+
+    if (!firstName || !lastName || !email || !password || !phoneNumber) {
+      ErrorMessage(res, 400, "Please provide all required fields");
+      return;
+    }
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      ErrorMessage(res, 400, "Invalid email format");
+      return;
+    }
+    // Validate password strength
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+    if (!passwordRegex.test(password)) {
+      ErrorMessage(
+        res,
+        400,
+        "Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, and one number"
+      );
+      return;
+    }
+    // Validate phone number format
+    const phoneRegex = /^\d{10}$/; // Adjust this regex based on your phone number format
+    if (!phoneRegex.test(phoneNumber)) {
+      ErrorMessage(res, 400, "Invalid phone number format");
+      return;
+    }
+
+    const existingSeller = await db.user.findUnique({
+      where: {
+        email: email,
+      },
+    });
+    if (existingSeller) {
+      ErrorMessage(res, 409, `Email (${email}) already exists`);
+      return;
+    }
+
+    const hashPassword = await bcrypt.hash(password, 10);
+
+    // Save seller to database
+    await db.user.create({
+      data: {
+        firstName,
+        lastName,
+        email,
+        password: hashPassword,
+        phoneNumber,
+      },
+    });
+
+    res.status(201).json({
+      success: true,
+      error: null,
+      message: "User created successfully",
+      status: 201,
+    });
+  } catch (error) {
+    console.error(error);
     ErrorMessage(res, 500, "Internal Server Error");
     return;
   }
